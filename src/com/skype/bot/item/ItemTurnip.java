@@ -6,6 +6,7 @@ package com.skype.bot.item;
 
 import com.skype.*;
 import java.util.*;
+import com.skype.bot.plugin.*;
 
 public class ItemTurnip extends ItemModule {
 
@@ -19,14 +20,11 @@ public class ItemTurnip extends ItemModule {
     @Override
     public int getValue() {
         GregorianCalendar Date = new GregorianCalendar();
-        Random TurnipRand = new Random(Date.get(Calendar.DAY_OF_YEAR) * Date.get(Calendar.YEAR));
-        int val = (TurnipRand.nextInt(50) + 475);
-        if(!isBuyable()){
-            val += 500 * Math.pow(TurnipRand.nextDouble(), 8);
+        if (isBuyable()) {
+            return TurnipPriceGenerator.getBuyPrice(500, 50, Date);
+        } else {
+            return TurnipPriceGenerator.getPrice(400, 200, Date);
         }
-        
-        return val;
-        
     }
 
     @Override
